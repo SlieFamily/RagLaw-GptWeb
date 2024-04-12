@@ -29,7 +29,26 @@ IK Analyzer插件 用以提供智能分词，是 elasticsearch 的插件之一�
 bin/elasticsearch-plugin install https://get.infini.cloud/elasticsearch/analysis-ik/x.x.x
 ```
 
-## es7.x+的不兼容
+## 下载词嵌入字典
+
+运行 `crime_qa.py` 需要已经训练好的**词嵌入**(`embedding/word_vec_300.bin`)，作者给出了下载地址。
+
+> 链接:https://pan.baidu.com/s/1onNkHJBZH5GRYBC28uYx9Q 密码:44lp
+
+## 部署QA系统
+
+本项目的QA实现较为简单。一句话概括就是：
+
+事先训练一个 word2vec 模型(`vector_train.py`)，将数据集中的question根据 word2vec 模型做embedding(`build_qa_database.py` )，在问答时，将当前question也生成embedding，然后在elasticsearch数据库中找到与之匹配的原question，从而根据原question的answer进行回复(`crime_qa.py`)。
+
+所以要实现本项目的QA系统，仅需以下几个步骤：
+
+1. 保证 es服务器 正在运行；
+2. 运行`train_vector.py`训练得到一个 word2vec 模型，或者直接下载：`embedding/word_vec_300.bin`；
+3. 运行 `build_qa_database.py` 在本地 es服务器 中生成数据；
+4. 此后仅需运行 `crime_qa.py` ，在控制台实现QA。
+
+## 附：修复es7.x+的不兼容
 
 ### 创建对象实例
 
@@ -103,23 +122,4 @@ action = {
     }
 }
 ```
-
-## 下载词嵌入字典
-
-运行 `crime_qa.py` 需要已经训练好的**词嵌入**(`'embedding/word_vec_300.bin`)，作者给出了下载地址。
-
-> 链接:https://pan.baidu.com/s/1onNkHJBZH5GRYBC28uYx9Q 密码:44lp
-
-## 运行QA系统
-
-本项目的QA实现较为简单。一句话概括就是：
-
-事先将数据集中的question做embedding，在问答时，将当前question也生成embedding，然后在elasticsearch数据库中找到与之匹配的原question，从而根据原question的answer进行回复。
-
-所以要实现本项目的QA系统，仅需以下几个步骤：
-
-1. 根据 es7.x 与旧版本的不同修改代码（前面已给出方案）；
-2. 保证 es服务器 正在运行；
-3. 事先运行 `build_qa_database.py` 在本地 es服务器 中生成数据；
-4. 此后仅需运行 `crime_qa.py` ，在控制台实现QA。
 

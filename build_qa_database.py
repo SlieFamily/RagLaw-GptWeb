@@ -10,21 +10,22 @@ import time
 import json
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
-import pymongo
+# import pymongo
 
 class ProcessIntoES:
     def __init__(self):
         self._index = "crime_data"
-        self.es = Elasticsearch([{"host": "127.0.0.1", "port": 9200}])
+        # self.es = Elasticsearch([{"host": "127.0.0.1", "port": 9200}]) 
+        self.es = Elasticsearch([{"host": "127.0.0.1", "port": 9200, 'scheme': 'http'}]) # 需要指定协议
         self.doc_type = "crime"
         cur = '/'.join(os.path.abspath(__file__).split('/')[:-1])
-        self.music_file = os.path.join(cur, 'qa_corpus.json')
+        self.music_file = os.path.join(cur, 'data/qa_corpus.json')
 
     '''创建ES索引，确定分词类型'''
     def create_mapping(self):
         node_mappings = {
             "mappings": {
-                self.doc_type: {    # type
+                # self.doc_type: {    # es7.x 版本以后不需要指定doc_type
                     "properties": {
                         "question": {    # field: 问题
                             "type": "text",    # lxw NOTE: cannot be string
@@ -39,7 +40,7 @@ class ProcessIntoES:
                             "index": "true"  # The index option controls whether field values are indexed.
                         },
                     }
-                }
+                # }
             }
         }
         if not self.es.indices.exists(index=self._index):
@@ -65,14 +66,15 @@ def init_ES():
     action_list = []
     BULK_COUNT = 1000  # 每BULK_COUNT个句子一起插入到ES中
 
-    for line in open(pie.music_file):
+    # for line in open(pie.music_file):
+    for line in open(pie.music_file, encoding='utf-8'): #需要指定编码方式
         if not line:
             continue
         item = json.loads(line)
         index += 1
         action = {
             "_index": pie._index,
-            "_type": pie.doc_type,
+            # "_type": pie.doc_type, #es7.x 之后没有 _type 了
             "_source": {
                 "question": item['question'],
                 "answers": '\n'.join(item['answers']),
@@ -92,7 +94,7 @@ def init_ES():
 
 if __name__ == "__main__":
     # 将数据库插入到elasticsearch当中
-    # init_ES()
+    init_ES()
     # 按照标题进行查询
-    question = '我老公要起诉离婚 我不想离婚怎么办'
+    # question = '我老公要起诉离婚 我不想离婚怎么办'
 

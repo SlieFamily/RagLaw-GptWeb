@@ -14,7 +14,8 @@ import jieba.posseg as pseg
 class CrimeQA:
     def __init__(self):
         self._index = "crime_data"
-        self.es = Elasticsearch([{"host": "127.0.0.1", "port": 9200}])
+        # self.es = Elasticsearch([{"host": "127.0.0.1", "port": 9200}]) 
+        self.es = Elasticsearch([{"host": "127.0.0.1", "port": 9200, 'scheme': 'http'}]) # 需要指定协议
         self.doc_type = "crime"
         cur = '/'.join(os.path.abspath(__file__).split('/')[:-1])
         self.embedding_path = os.path.join(cur, 'embedding/word_vec_300.bin')
@@ -30,9 +31,15 @@ class CrimeQA:
                 "match": {
                     key: value,
                 }
-            }
+            },
+            "size": 20, # es7.x 版本以后size要整合到body里
         }
-        searched = self.es.search(index=self._index, doc_type=self.doc_type, body=query_body, size=20)
+        # searched = self.es.search(index=self._index, doc_type=self.doc_type, body=query_body, size=20)
+        searched = self.es.search(index=self._index, body=query_body) # es7.x 版本以后不需要指定doc_type和size，size要整合到body里
+
+        # 注意：如果运行时提示网络连接失败，可能说明当前环境Elasticsearch服务器没有启动，去官网下载es并配置对应的IP端口号
+        # 如果提示拒绝访问，可能是开启了安全模式，去配置文件中关闭 xpack.security.enabled: false
+
         # 输出查询到的结果
         return searched["hits"]["hits"]
 
@@ -53,7 +60,8 @@ class CrimeQA:
     def load_embedding(self, embedding_path):
         embedding_dict = {}
         count = 0
-        for line in open(embedding_path):
+        # for line in open(embedding_path):
+        for line in open(embedding_path, encoding='utf-8'): #需要指定编码方式
             line = line.strip().split(' ')
             if len(line) < 300:
                 continue

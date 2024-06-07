@@ -1,2 +1,3 @@
 embedding/*.bin
 data/qa_corpus.json
+data/qa_with_ref_92k.json

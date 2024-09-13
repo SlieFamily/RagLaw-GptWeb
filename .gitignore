@@ -1,3 +1,4 @@
-embedding/*.bin
-data/qa_corpus.json
+raw_repo/embedding/*.bin
+raw_repo/data/qa_corpus.json
+raw_repo/data/qa_with_ref_92k.json
 data/qa_with_ref_92k.json

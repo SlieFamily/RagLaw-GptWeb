@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" class="js-site-favicon" type="image/png" href="./static/logo.svg">
+    <title>Petals &ndash; Decentralized platform for running large language models</title>
+    <link href="./static/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/style.css" rel="stylesheet">
+  </head>
+  <body>
+
+<main>
+  <div class="position-relative overflow-hidden px-5 pt-1 m-md-4 text-center">
+    <div class="col-lg-6 col-md-8 p-md-3 mx-auto my-3" style="max-width: 700px;">
+      <div class="mb-4">
+        <div class="d-md-inline-block pe-md-4">
+          <a target="_blank" href="https://petals.dev"><img src="./static/logo.svg" height="100" class="rot-image"></a>
+        </div>
+        <h1 class="display-4 fw-bold d-md-inline-block justify-content-center" style="font-size: 40pt; vertical-align: middle;">
+          法律QA
+          <span style="font-size: 25pt; color: #aaa;">系统</span>
+        </h1>
+      </div>
+      <div class="welcome mb-4">
+        <div>
+          <b>欢迎!</b> 本页面为项目 法律QA系统 的 Demo 页面，仅供演示使用。
+          后续落地可自由更改显示内容。基本模型信息如下：
+        </div>
+        <form id="settings">
+          <div class="mt-2">
+            <label class="group-label">Model:</label>
+            <div class="btn-group family-selector" role="group">
+              <input type="radio" class="btn-check" name="family" value="family_id" id="family-family_id" checked>
+              <label class="btn btn-outline-primary" for="family-family_id">gpt-3.5</label>
+            </div>
+          </div>
+          <div class="mt-2">
+            <label class="group-label">RAG:</label>
+            <div class="model-selector btn-group" role="group" data-family="family_id"
+                style="display: true;">
+              <input type="radio" class="btn-check" name="model" value="model.backend.key" id="model_id" checked>
+              <label class="btn btn-outline-primary" for="model_id">qa_with_ref_92k.json</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="dialogue">
+        <!-- <p class="human-replica">在此处键入所需询问的问题~</p> -->
+        <!-- <p class="ai-replica"><span class="text">系统将在此处回答~</span></p> -->
+        <p class="human-replica"><textarea class="form-control" id="exampleTextarea" rows="2" placeholder="在此处键入所需询问的问题~"></textarea></p>
+      </div>
+      <p class="error-box" style="display: none;">
+        请求失败. 请<a class="retry-link" href="#">重试</a><br>
+        <span class="error-message"></span>
+        <span class="out-of-capacity"><br>
+          <b>We're out of capacity</b> &mdash; attention caches of existing servers are full.
+          Please come back later!
+        </span>
+      </p>
+
+      <p class="acknowledgements mt-5 pt-3">
+        <b>Shift+Enter</b> 在输入框中换行.<br>
+      </p>
+    </div>
+  </div>
+</main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="./static/autosize.min.js"></script>
+    <script src="./static/chat.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LENBCEYH86"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LENBCEYH86');
+    </script>
+  </body>
+</html>

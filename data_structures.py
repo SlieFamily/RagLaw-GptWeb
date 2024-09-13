@@ -4,7 +4,6 @@ import time
 import json
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
-# import pymongo
 import numpy as np
 from transformers import BertTokenizer, BertModel, BertTokenizerFast
 import torch
@@ -14,8 +13,6 @@ from openai import OpenAI
 model_name = "bert-base-chinese"
 tokenizer = BertTokenizerFast.from_pretrained(model_name)
 model = BertModel.from_pretrained(model_name)
-
-
 
 client = OpenAI(
     # defaults to os.environ.get("OPENAI_API_KEY")
@@ -105,7 +102,7 @@ def init_ES():
         data = json.load(file)
 
     # 编码参考文档和问题
-    for doc in data[64000:]:
+    for doc in data:
         doc["question_embedding"] = encode_texts([doc["question"]])[0]
         doc["answer_embedding"] = encode_texts([doc["answer"]])[0]
         doc["reference_embeddings"] = encode_texts(doc["reference"])[0]
@@ -222,15 +219,6 @@ def qa_interface(question, docs):
 
 if __name__ == "__main__":
     # 第一次运行时将数据库插入到elasticsearch当中
-    # init_ES()
-
-    while True:
-        print('-'*20)
-        print('-> 请输入问题：', end="")
-        question = input()
-        print('-'*20)
-        print('◇ 检索相关内容并生成回答....\n')
-        docs = search_similar_documents(question, top_k=3)
-        qa_interface(question, docs)
+    init_ES()
 
 

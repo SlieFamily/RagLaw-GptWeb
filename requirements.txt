@@ -1,0 +1,9 @@
+elasticsearch==8.13.0
+Flask==3.0.3
+Flask_Cors==5.0.0
+flask_sock==0.7.0
+numpy==2.1.1
+openai==1.45.0
+scikit_learn==1.4.2
+torch==2.1.1+cu121
+transformers==4.41.2

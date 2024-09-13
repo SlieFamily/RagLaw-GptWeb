@@ -3,7 +3,8 @@
 > **项目支持**：
 >
 > - Web Page -> [💬petals-infra/chat.petals.dev](https://github.com/petals-infra/chat.petals.dev)
-> - Dataset -> 
+> - Dataset -> [CSHaitao/LexiLaw: LexiLaw - 中文法律大模型](https://github.com/CSHaitao/LexiLaw)
+> - Encoder -> [google-bert/bert-base-chinese · Hugging Face](https://huggingface.co/google-bert/bert-base-chinese)
 
 ## 界面预览
 
@@ -17,7 +18,7 @@
 
 3. 下载 `qa_with_ref_92k.json` 数据集至 `data` 目录
 
-4. 启动 **Elasticsearch 服务端**程序（比如 Windows 系统是启动 `elasticsearch\bin\elasticsearch.bat`）
+4. 启动 **Elasticsearch 服务端**程序（例如 Windows 系统是启动 `elasticsearch\bin\elasticsearch.bat`）
 
 5. 运行 `python data_structures.py` 将数据集 embedding 到数据库（此过程耗时较久，数据库一旦构建此后该步骤可跳过）
 
@@ -25,6 +26,8 @@
     ```shell
     flask run --host=0.0.0.0 --port=5000
     ```
+
+7. 浏览器中访问 `http://127.0.0.1:5000` 即可。
 
 ## 技术细节
 

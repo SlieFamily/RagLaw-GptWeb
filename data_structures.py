@@ -16,7 +16,7 @@ model = BertModel.from_pretrained(model_name)
 
 client = OpenAI(
     # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key="sk-yjZqS0m2AMylEEFXypJXqT8lRpPPBTnjxL61Qy5S12imSJ7j",
+    api_key="sk-xxxxxxxxxxxxx",
     base_url="https://api.chatanywhere.tech/v1"
 )
 
